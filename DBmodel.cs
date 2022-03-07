@@ -27,11 +27,11 @@ namespace internet_shop_test2
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
-           // modelBuilder.Entity<customer>().HasKey(u => u.phone_number);
-           // modelBuilder.Entity<order>().HasKey(u => u.id_order);
-           // modelBuilder.Entity<order>().HasOne(p => p.customer).WithMany(b => b.Orders).HasForeignKey(p => p.phone_number);
+            modelBuilder.Entity<customer>().HasKey(u => u.id);
+            modelBuilder.Entity<order>().HasKey(u => u.id);
+            modelBuilder.Entity<order>().HasOne(p => p.customer).WithMany(b => b.Orders).HasForeignKey(p => p.phone_number);
             modelBuilder.Entity<product>().HasKey(u => u.id);
-           // modelBuilder.Entity<delivery>().HasNoKey();
+            modelBuilder.Entity<delivery>().HasNoKey();
             //modelBuilder.Entity<Department>().Property(t => t.Name).IsRequired();
             //modelBuilder.Entity<customer>().HasNoKey();
             //modelBuilder.Entity<order>().HasNoKey();
@@ -43,8 +43,9 @@ namespace internet_shop_test2
     }
 
 
-   /* public class customer
+    public class customer
     {
+        public int id { get; set; }
         public int phone_number { get; set; }
         public string fname { get; set; }
         public string lname { get; set; }
@@ -55,14 +56,13 @@ namespace internet_shop_test2
     }
     public class order
     {
-        
-        public int id_order { get; set; }
+        public int id { get; set; }
         public int product_number { get; set; }
         public int phone_number { get; set; }//внещний ключ
 
         public customer customer { get; set; }//навигационные свойство 
 
-    }*/
+    }
     public class product
     {
         public int id { get; set; }
@@ -70,13 +70,14 @@ namespace internet_shop_test2
         public int existence { get; set; }
         public string name { get; set; }
     }
-  /*  public class delivery
+    public class delivery
     {
+        public int id { get; set; }
         public int order_number { get; set; }
         public bool shipment { get; set; }
         public bool issued { get; set; }
         public bool delivered { get; set; }
         public DateTime time { get; set; }
 
-    }*/
+    }
 }
