@@ -28,10 +28,16 @@ namespace internet_shop_test2
         {
             
             modelBuilder.Entity<customer>().HasKey(u => u.id);
+
             modelBuilder.Entity<order>().HasKey(u => u.id);
-            modelBuilder.Entity<order>().HasOne(p => p.customer).WithMany(b => b.Orders).HasForeignKey(p => p.phone_number);
+            modelBuilder.Entity<order>().HasOne(p => p.customer).WithMany(b => b.Orders).HasForeignKey(p => p.customerId);
+            modelBuilder.Entity<order>().HasOne(p => p.product).WithMany(b => b.Orders).HasForeignKey(p => p.productId);
+            
             modelBuilder.Entity<product>().HasKey(u => u.id);
-            modelBuilder.Entity<delivery>().HasNoKey();
+
+            modelBuilder.Entity<delivery>().HasKey(u => u.id);
+            //modelBuilder.Entity<delivery>().HasOne(p => p.order).WithOne(b => b.delivery).HasForeignKey(p => p.orderId);
+
             //modelBuilder.Entity<Department>().Property(t => t.Name).IsRequired();
             //modelBuilder.Entity<customer>().HasNoKey();
             //modelBuilder.Entity<order>().HasNoKey();
@@ -58,9 +64,16 @@ namespace internet_shop_test2
     {
         public int id { get; set; }
         public int product_number { get; set; }
-        public int phone_number { get; set; }//внещний ключ
+        public int phone_number { get; set; }
+        public int customerId { get; set; }//внещний ключ
+        public int productId { get; set; }//внещний ключ
+
 
         public customer customer { get; set; }//навигационные свойство 
+        public product product { get; set; }//навигационные свойство 
+
+
+        public delivery delivery { get; set; }
 
     }
     public class product
@@ -69,6 +82,9 @@ namespace internet_shop_test2
         public int product_number { get; set; }
         public int existence { get; set; }
         public string name { get; set; }
+        
+         public List<order> Orders { get; set; }
+
     }
     public class delivery
     {
@@ -78,6 +94,10 @@ namespace internet_shop_test2
         public bool issued { get; set; }
         public bool delivered { get; set; }
         public DateTime time { get; set; }
+
+        public int orderId { get; set; }//внещний ключ
+
+        public order order { get; set; }//навигационные свойство 
 
     }
 }
